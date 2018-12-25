@@ -1,11 +1,11 @@
-# LayterControl_WPF
-WPF模拟Ps图层简单操作，完全基于MVVM数据驱动。
-![f](https://github.com/lingme/Picture_Bucket/raw/master/LayterControl/AlternateGif.gif)
+﻿namespace LayterControl.Model
+{
+    using PropertyChanged;
+    using System.Windows;
+    using System.Windows.Media;
 
-##### 数据模型
-
-```C{.line-numbers}
-public class ZLayter
+    [AddINotifyPropertyChangedInterface]
+    public class ZLayter
     {
         /// <summary>
         /// 图层唯一标识
@@ -57,4 +57,4 @@ public class ZLayter
         /// </summary>
         public double Y { get; set; }
     }
-```
+}
