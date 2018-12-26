@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows.Data;
 using System.Windows.Controls;
 using LayterControl.CommandExt;
+using System.Linq;
 
 namespace LayterControl
 {
@@ -18,6 +19,11 @@ namespace LayterControl
         /// 图层集合
         /// </summary>
         public ObservableCollection<ZLayter> LayterCollection { get; set; } = new ObservableCollection<ZLayter>();
+
+        /// <summary>
+        /// 底图
+        /// </summary>
+        public ZLayter MainBackgroundLayter { get; set; }
 
         /// <summary>
         /// 选中图层
@@ -31,7 +37,7 @@ namespace LayterControl
         {
             get
             {
-                return new RelayCommand<ZLayter>((p)=> p.LayterSource = null);
+                return new RelayCommand<ZLayter>((p)=> LayterCollection.Remove(p));
             }
         }
 
@@ -99,18 +105,29 @@ namespace LayterControl
 
         public MainWindowVM()
         {
-            for (int i = 0; i < 10; i++)
+            string[] imagePaths = new string[]
             {
-                LayterCollection.Add(new ZLayter() {
+                "pack://application:,,,/Images/humen_bg.jpg",
+                "pack://application:,,,/Images/eye.bmp",
+                "pack://application:,,,/Images/mouth.bmp"
+            };
+
+            for (int i = 0; i < imagePaths.Length; i++)
+            {
+                var bitmap = new BitmapImage(new Uri(imagePaths[i]));
+                WriteableBitmap writeableBitmap = new WriteableBitmap(bitmap);
+                LayterCollection.Add(new ZLayter()
+                {
                     LayterID = i,
-                    LayterSource = new BitmapImage(new Uri(@"pack://application:,,,/Images/bottom.jpg")),
+                    LayterSource = writeableBitmap,
                     LayterName = $"图层 {i}",
-                    Height = 250,
-                    Width = 300,
+                    Height = writeableBitmap.PixelHeight,
+                    Width = writeableBitmap.PixelWidth,
                     X = i * 50,
                     Y = i * 50
                 });
             }
+            LayterCollection.Remove(MainBackgroundLayter = LayterCollection.FirstOrDefault());
         }
     }
 }

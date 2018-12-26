@@ -9,7 +9,7 @@
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:ext="clr-namespace:LayterControl.CommandExt"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1366">
+        Title="MainWindow" Height="670" Width="1366">
 
     <Window.DataContext>
         <local:MainWindowVM></local:MainWindowVM>
@@ -80,21 +80,21 @@
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView ItemsSource="{Binding LayterCollection}" BorderThickness="0">
+        <TreeView ItemsSource="{Binding LayterCollection}" >
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type model:ZLayter}">
                     <Grid Height="40" Background="Transparent">
                         <StackPanel Orientation="Horizontal" Height="30">
-                            <CheckBox IsChecked="{Binding ShowLayter,Mode=TwoWay}" Height="20" Width="20" VerticalAlignment="Center"></CheckBox>
+                            <CheckBox IsChecked="{Binding ShowLayter,Mode=TwoWay}" Height="20" Width="20" VerticalAlignment="Center" Margin="0 0 10 0"></CheckBox>
                             <Border Width="35" Height="25" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center">
                                 <Image Source="{Binding LayterSource}"></Image>
                             </Border>
                             <TextBlock Text="{Binding LayterName}" Width="100" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
-                            <Button Content="X" Height="20" Width="20" Command="{Binding DataContext.CleanCommand,RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                            <Button Background="Transparent" BorderThickness="0" Content="X" Height="20" Width="20" Command="{Binding DataContext.CleanCommand,RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
                                     CommandParameter="{Binding }"></Button>
                         </StackPanel>
                     </Grid>
@@ -111,8 +111,45 @@
         </TreeView>
 
 
-        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Column="1"  Height="{Binding MainBackgroundLayter.Height}" Width="{Binding MainBackgroundLayter.Width}">
+            <Border.Background>
+                <ImageBrush ImageSource="{Binding MainBackgroundLayter.LayterSource}" Stretch="Fill"></ImageBrush>
+            </Border.Background>
             <ListBox ItemContainerStyle="{StaticResource ROIItemStyle}" ItemsSource="{Binding LayterCollection}" Style="{StaticResource ROIListBoxStyle}"></ListBox>
+        </Border>
+
+        <!--画板-->
+        <InkCanvas Background="Transparent" Grid.Column="1" Visibility="Collapsed">
+            <InkCanvas.DefaultDrawingAttributes>
+                <DrawingAttributes Color="Red" Width="1" Height="1"></DrawingAttributes>
+            </InkCanvas.DefaultDrawingAttributes>
+        </InkCanvas>
+
+        <!--选项-->
+        <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="画笔" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+
+                <TextBlock Grid.Row="1" Text="颜色" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <ComboBox Grid.Row="1" Grid.Column="1" Width="150" Height="25"></ComboBox>
+                <TextBlock Grid.Row="2" Text="粗细" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+
+                <StackPanel Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Slider Grid.Row="2" Grid.Column="2" Width="100" Maximum="100" Minimum="1"></Slider>
+                    <TextBlock Text="100" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Window>

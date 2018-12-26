@@ -8,7 +8,23 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
 
-    <Border BorderBrush="Black" BorderThickness="1">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="Red" BorderThickness="1">
+                            <Border.Background>
+                                <SolidColorBrush Color="Red" Opacity="0.1"></SolidColorBrush>
+                            </Border.Background>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Border>
         <Grid>
             <Thumb
                 Width="10"
