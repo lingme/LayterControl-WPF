@@ -18,7 +18,7 @@
     <Window.Resources>
         <DataTemplate DataType="{x:Type model:ZLayter}">
             <Grid x:Name="xGrid" Visibility="Collapsed" >
-                <Image VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding LayterSource}"></Image>
+                <Image VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding LayterSource}" Stretch="Fill"></Image>
                 <control:ResizerControl
                     x:Name="Resizer"
                     Background="#30FFFFFF"
@@ -77,13 +77,14 @@
         </Style>
     </Window.Resources>
     
-    <Grid>
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView ItemsSource="{Binding LayterCollection}">
+        <TreeView ItemsSource="{Binding LayterCollection}" BorderThickness="0">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type model:ZLayter}">
                     <Grid Height="40" Background="Transparent">
@@ -110,6 +111,8 @@
         </TreeView>
 
 
-        <ListBox Grid.Column="1" ItemContainerStyle="{StaticResource ROIItemStyle}" ItemsSource="{Binding LayterCollection}" Style="{StaticResource ROIListBoxStyle}"></ListBox>
+        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+            <ListBox ItemContainerStyle="{StaticResource ROIItemStyle}" ItemsSource="{Binding LayterCollection}" Style="{StaticResource ROIListBoxStyle}"></ListBox>
+        </Border>
     </Grid>
 </Window>
