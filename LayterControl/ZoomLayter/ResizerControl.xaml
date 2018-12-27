@@ -10,12 +10,16 @@
 
     <UserControl.Resources>
         <Style TargetType="{x:Type Thumb}">
+            <Setter Property="Cursor" Value="ScrollAll"></Setter>
+            <Setter Property="Width" Value="7"></Setter>
+            <Setter Property="Height" Value="7"></Setter>
+            <Setter Property="Margin" Value="-1"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
                         <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="Red" BorderThickness="1">
                             <Border.Background>
-                                <SolidColorBrush Color="Red" Opacity="0.1"></SolidColorBrush>
+                                <SolidColorBrush Color="Red" Opacity="1"></SolidColorBrush>
                             </Border.Background>
                         </Border>
                     </ControlTemplate>
@@ -24,39 +28,42 @@
         </Style>
     </UserControl.Resources>
 
-    <Border>
+    <Border BorderThickness="1">
+        <Border.BorderBrush>
+            <LinearGradientBrush SpreadMethod="Repeat" StartPoint="0,5" EndPoint="5,0" MappingMode="Absolute">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="Red" Offset="0.2"/>
+                    <GradientStop Color="Transparent" Offset="0.4"/>
+                    <GradientStop Color="Transparent" Offset="0.6"/>
+                    <GradientStop Color="Red" Offset="0.8"/>
+                    <GradientStop Color="Red" Offset="1"/>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        
         <Grid>
             <Thumb
-                Width="10"
-                Height="10"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 DragDelta="Center_DragDelta" />
 
             <Thumb
-                Width="10"
-                Height="10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 DragDelta="UpperLeft_DragDelta" />
 
             <Thumb
-                Width="10"
-                Height="10"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 DragDelta="UpperRight_DragDelta" />
 
             <Thumb
-                Width="10"
-                Height="10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
                 DragDelta="LowerLeft_DragDelta" />
 
             <Thumb
-                Width="10"
-                Height="10"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 DragDelta="LowerRight_DragDelta" />

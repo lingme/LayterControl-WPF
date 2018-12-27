@@ -3,6 +3,7 @@
     using PropertyChanged;
     using System.Windows;
     using System.Windows.Media;
+    using System.ComponentModel;
 
     [AddINotifyPropertyChangedInterface]
     public class ZLayter
@@ -20,17 +21,22 @@
         /// <summary>
         /// 图层是否可见
         /// </summary>
-        public bool ShowLayter { get; set; } = true;
+        public bool ShowLayter { get; set; } = false;
 
         /// <summary>
-        /// 图层允许移动
+        /// 编辑模式
         /// </summary>
-        public bool CanMove { get; set; } = true;
+        public EditModeType EditMode { get; set; } = EditModeType.Move;
 
         /// <summary>
-        /// 图层
+        /// 源图层
         /// </summary>
         public ImageSource LayterSource { get; set; }
+
+        /// <summary>
+        /// 绘制层
+        /// </summary>
+        public ImageSource RenderLayterSource { get; set; }
 
         /// <summary>
         /// 图层名
@@ -56,5 +62,18 @@
         /// 左顶点纵坐标
         /// </summary>
         public double Y { get; set; }
+    }
+
+
+    public enum EditModeType
+    {
+        [Description("画笔")]
+        Brush,
+
+        [Description("橡皮擦")]
+        Eraser,
+
+        [Description("移动")]
+        Move
     }
 }

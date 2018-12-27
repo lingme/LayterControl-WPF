@@ -75,7 +75,7 @@ namespace LayterControl
                 {
                     if(p.EventArgs is KeyEventArgs keyEventArgs)
                     {
-                        if(SelectedZLayter != null && SelectedZLayter.CanMove)
+                        if(SelectedZLayter != null)
                         {
                             switch(keyEventArgs.Key)
                             {
@@ -120,7 +120,7 @@ namespace LayterControl
                 {
                     LayterID = i,
                     LayterSource = writeableBitmap,
-                    LayterName = $"图层 {i}",
+                    LayterName = $"Layter {i}",
                     Height = writeableBitmap.PixelHeight,
                     Width = writeableBitmap.PixelWidth,
                     X = i * 50,

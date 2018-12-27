@@ -9,7 +9,8 @@
         xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:ext="clr-namespace:LayterControl.CommandExt"
         mc:Ignorable="d"
-        Title="MainWindow" Height="670" Width="1366">
+        ResizeMode="NoResize"
+        Title="MainWindow" Height="670" Width="1550">
 
     <Window.DataContext>
         <local:MainWindowVM></local:MainWindowVM>
@@ -19,6 +20,7 @@
         <DataTemplate DataType="{x:Type model:ZLayter}">
             <Grid x:Name="xGrid" Visibility="Collapsed" >
                 <Image VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding LayterSource}" Stretch="Fill"></Image>
+                <Image VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding RenderLayterSource}" Stretch="Fill"></Image>
                 <control:ResizerControl
                     x:Name="Resizer"
                     Background="#30FFFFFF"
@@ -29,9 +31,13 @@
                     Y="{Binding Y}" />
             </Grid>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding LayterCheck}" Value="True">
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding LayterCheck}" Value="True"></Condition>
+                        <Condition Binding="{Binding EditMode}" Value="{x:Static model:EditModeType.Move}"></Condition>
+                    </MultiDataTrigger.Conditions>
                     <Setter TargetName="Resizer" Property="Visibility" Value="Visible" />
-                </DataTrigger>
+                </MultiDataTrigger>
                 <DataTrigger Binding="{Binding ShowLayter}" Value="True">
                     <Setter TargetName="xGrid" Property="Visibility" Value="Visible"></Setter>
                 </DataTrigger>
@@ -82,12 +88,14 @@
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="500"/>
         </Grid.ColumnDefinitions>
 
+        <!--图层列表-->
         <TreeView ItemsSource="{Binding LayterCollection}" >
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type model:ZLayter}">
-                    <Grid Height="40" Background="Transparent">
+                    <Grid Height="40">
                         <StackPanel Orientation="Horizontal" Height="30">
                             <CheckBox IsChecked="{Binding ShowLayter,Mode=TwoWay}" Height="20" Width="20" VerticalAlignment="Center" Margin="0 0 10 0"></CheckBox>
                             <Border Width="35" Height="25" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center">
@@ -110,8 +118,8 @@
             </Behaviors:Interaction.Triggers>
         </TreeView>
 
-
-        <Border Grid.Column="1"  Height="{Binding MainBackgroundLayter.Height}" Width="{Binding MainBackgroundLayter.Width}">
+        <!--编辑区域-->
+        <Border x:Name="editRegion" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="{Binding MainBackgroundLayter.Height}" Width="{Binding MainBackgroundLayter.Width}" >
             <Border.Background>
                 <ImageBrush ImageSource="{Binding MainBackgroundLayter.LayterSource}" Stretch="Fill"></ImageBrush>
             </Border.Background>
@@ -119,7 +127,7 @@
         </Border>
 
         <!--画板-->
-        <InkCanvas Background="Transparent" Grid.Column="1" Visibility="Collapsed">
+        <InkCanvas x:Name="inkCanvas" Background="Transparent" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="{Binding MainBackgroundLayter.Height}" Width="{Binding MainBackgroundLayter.Width}" >
             <InkCanvas.DefaultDrawingAttributes>
                 <DrawingAttributes Color="Red" Width="1" Height="1"></DrawingAttributes>
             </InkCanvas.DefaultDrawingAttributes>
@@ -137,19 +145,44 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="画笔" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-
+                <!--默认移动-->
+                <RadioButton IsChecked="True" Grid.Row="6" GroupName="tool" Content="移动" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="20 0 0 0"></RadioButton>
+                
+                <!--画笔选项-->
+                <RadioButton GroupName="tool" Content="画笔" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="20 0 0 0"></RadioButton>
                 <TextBlock Grid.Row="1" Text="颜色" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                <ComboBox Grid.Row="1" Grid.Column="1" Width="150" Height="25"></ComboBox>
+                <Rectangle Grid.Row="1" Grid.Column="1" Width="120" Height="25" Fill="Red"></Rectangle>
                 <TextBlock Grid.Row="2" Text="粗细" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-
                 <StackPanel Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Slider Grid.Row="2" Grid.Column="2" Width="100" Maximum="100" Minimum="1"></Slider>
-                    <TextBlock Text="100" VerticalAlignment="Center"></TextBlock>
+                    <Slider x:Name="colorSlider" Grid.Row="2" Grid.Column="2" Width="100" Maximum="100" Minimum="1" ></Slider>
+                    <TextBlock Width="25" Text="{Binding Value,ElementName=colorSlider,StringFormat={}{0:F0}}" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
+
+                <!--橡皮擦选项-->
+                <RadioButton Grid.Row="3" GroupName="tool" Content="橡皮擦" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="20 0 0 0"></RadioButton>
+                <TextBlock Grid.Row="4" Text="大小" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <StackPanel Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Slider x:Name="sizeSlider" Grid.Row="2" Grid.Column="2" Width="100" Maximum="100" Minimum="1" ></Slider>
+                    <TextBlock Width="25" Text="{Binding Value,ElementName=sizeSlider,StringFormat={}{0:F0}}" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <TextBlock Grid.Row="5" Text="硬度" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <StackPanel Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Slider x:Name="roSlider" Grid.Row="2" Grid.Column="2" Width="100" Maximum="100" Minimum="1" ></Slider>
+                    <TextBlock Width="25" Text="{Binding Value,ElementName=roSlider,StringFormat={}{0:F0}}" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+
+                <Button Width="40" Height="20" Content="T" Grid.Row="7" Click="Button_Click"></Button>
             </Grid>
+        </Border>
+
+        <Border Background="Red" Grid.Column="3">
+            <Image x:Name="image"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Image>
         </Border>
     </Grid>
 </Window>
