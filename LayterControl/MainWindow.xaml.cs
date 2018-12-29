@@ -33,7 +33,6 @@ namespace LayterControl
         private int[,] BlurKn;                                         //模糊卷积集合
         private List<Point> pts = new List<Point>();      //画点集合
         private Rectangle minrect;                                //最小包围矩形
-
         private Bitmap smobitmap;                              //模糊图
 
         public MainWindow()
