@@ -58,9 +58,9 @@ namespace LayterControl
 
             smobitmap = createMaskbmp(pts, out minrect, (int)editRegion.ActualWidth, (int)editRegion.ActualHeight);//获取掩码
 
-            effrect = extendRect(minrect, effsize);    //扩展区域
+            //effrect = extendRect(minrect, effsize);    //扩展区域
 
-            cutPolygonbmp(BitmapImageToBitmap(new BitmapImage(new Uri("pack://application:,,,/Images/humen_bg.jpg"))), effrect, smobitmap,out mainbmp);
+            //cutPolygonbmp(BitmapImageToBitmap(new BitmapImage(new Uri("pack://application:,,,/Images/humen_bg.jpg"))), effrect, smobitmap,out mainbmp);
 
             //cutPolygonbmp(BitmapImageToBitmap(new BitmapImage(new Uri("pack://application:,,,/Images/humen_bg.jpg"))), effrect, smobitmap);
 
