@@ -2,7 +2,7 @@
 WPF模拟Ps图层简单操作，完全基于MVVM数据驱动。
 ![f](https://github.com/lingme/Picture_Bucket/raw/master/LayterControl/AlternateGif.gif)
 
-#### 数据模型
+##### 数据模型
 
 ```C{.line-numbers}
 public class ZLayter
