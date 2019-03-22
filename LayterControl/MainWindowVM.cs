@@ -109,7 +109,8 @@ namespace LayterControl
             {
                 "pack://application:,,,/Images/humen_bg.jpg",
                 "pack://application:,,,/Images/eye.bmp",
-                "pack://application:,,,/Images/mouth.bmp"
+                "pack://application:,,,/Images/mouth.bmp",
+                 "pack://application:,,,/Images/mouth.bmp"
             };
 
             for (int i = 0; i < imagePaths.Length; i++)
