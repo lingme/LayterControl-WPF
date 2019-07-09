@@ -1,5 +1,5 @@
 # LayterControl_WPF
-WPF模拟Ps图层简单操作，完全基于MVVM数据驱动。
+
 ![f](https://github.com/lingme/Picture_Bucket/raw/master/LayterControl/AlternateGif.gif)
 
 ##### 数据模型
@@ -8,52 +8,52 @@ WPF模拟Ps图层简单操作，完全基于MVVM数据驱动。
 public class ZLayter
     {
         /// <summary>
-        /// 图层唯一标识
+        /// layer id
         /// </summary>
         public int LayterID { get; set; }
 
         /// <summary>
-        /// 图层是否选中
+        /// layer is check
         /// </summary>
         public bool LayterCheck { get; set; } = false;
 
         /// <summary>
-        /// 图层是否可见
+        /// layer visibility
         /// </summary>
         public bool ShowLayter { get; set; } = true;
 
         /// <summary>
-        /// 图层允许移动
+        /// layer can drag
         /// </summary>
         public bool CanMove { get; set; } = true;
 
         /// <summary>
-        /// 图层
+        /// layer image source
         /// </summary>
         public ImageSource LayterSource { get; set; }
 
         /// <summary>
-        /// 图层名
+        /// layer name
         /// </summary>
         public string LayterName { get; set; }
 
         /// <summary>
-        /// 图层高度
+        /// layer height
         /// </summary>
         public double Height { get; set; }
 
         /// <summary>
-        /// 图层宽度
+        /// layer width
         /// </summary>
         public double Width { get; set; }
 
         /// <summary>
-        /// 左顶点横坐标
+        /// layer x
         /// </summary>
         public double X { get; set; }
 
         /// <summary>
-        /// 左顶点纵坐标
+        /// layer y
         /// </summary>
         public double Y { get; set; }
     }
