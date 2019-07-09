@@ -2,7 +2,7 @@
 
 ![f](https://github.com/lingme/Picture_Bucket/raw/master/LayterControl/AlternateGif.gif)
 
-##### 数据模型
+##### data model binding 
 
 ```C{.line-numbers}
 public class ZLayter
