@@ -17,7 +17,7 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type model:ZLayter}">
+        <DataTemplate x:Key="dataTemp" DataType="{x:Type model:ZLayter}">
             <Grid x:Name="xGrid" Visibility="Collapsed" >
                 <Image VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding LayterSource}" Stretch="Fill"></Image>
                 <Image VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding RenderLayterSource}" Stretch="Fill"></Image>
@@ -123,7 +123,7 @@
             <Border.Background>
                 <ImageBrush ImageSource="{Binding MainBackgroundLayter.LayterSource}" Stretch="Fill"></ImageBrush>
             </Border.Background>
-            <ListBox ItemContainerStyle="{StaticResource ROIItemStyle}" ItemsSource="{Binding LayterCollection}" Style="{StaticResource ROIListBoxStyle}"></ListBox>
+            <ListBox ItemContainerStyle="{StaticResource ROIItemStyle}" ItemsSource="{Binding LayterCollection}" ItemTemplate="{StaticResource dataTemp}" Style="{StaticResource ROIListBoxStyle}"></ListBox>
         </Border>
 
         <!--画板-->
